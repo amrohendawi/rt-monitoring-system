@@ -15,8 +15,8 @@ It uses the following technologies:
 ## Getting started
 To run the project refer to the README files in the following directories:
 
-1- [Data Source](Data Source/) for data aggregation and forwarding
+1- [Data Source](data_source) for data aggregation and forwarding
 
-2- [Data Visualization](Data Visualization/) for data reception and visualization
+2- [Data Visualization](data_visualization) for data reception and visualization
 
 ![Screenshot](screenshots/3d_visualization.png)
