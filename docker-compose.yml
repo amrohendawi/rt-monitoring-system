@@ -1,0 +1,39 @@
+version: '3'
+services:
+  rest_api:
+    build: FlaskRestfullApp/
+    ports:
+      - "4545:4545"
+    volumes:
+      - ./FlaskRestfullApp:/usr/src/app
+    environment:
+      FLASK_ENV: development
+    links:
+      - db
+  lat_vis:
+    build: LatencyVisualisation/
+    ports:
+      - "127.0.0.1:8050:8050"
+    volumes:
+      - ./LatencyVisualisation:/usr/src/app
+    environment:
+      FLASK_ENV: development
+    links:
+      - rest_api
+  db:
+    image: influxdb:1.2.2
+      # First one is HOST PORT and second one CONTAINER PORT
+      # HOST PORT for the services from the outside of swarm
+      # CONTAINER PORT for the services in the network that compose defines
+    ports:
+      - "8086:8086"
+    environment:
+      INFLUXDB_USER: "root"
+      INFLUXDB_PASSWORD: "root"
+  data_source:
+    build: DataSource/
+    privileged: true
+    environment:
+      TARGET_URL: rest_api:4545/writereaddata
+    ports:
+      - "8080:8080"
